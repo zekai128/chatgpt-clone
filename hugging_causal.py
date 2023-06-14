@@ -11,7 +11,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # Define the model identifier or path
-model_identifier = "gpt2-xl"  # Replace with your desired model, e.g., "gpt2", "gpt2-medium", "gpt2-large", etc.
+model_identifier = "gpt2"  # Replace with your desired model, e.g., "gpt2", "gpt2-medium", "gpt2-large", etc.
 
 # Load the tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained(model_identifier)
@@ -31,8 +31,13 @@ input_ids = tokenizer.encode(context, return_tensors="pt").to(device)
 with torch.no_grad():
     outputs = model.generate(input_ids, max_length=200, num_return_sequences=1, do_sample=True)
 
+print("THE TYPE OF OUTPUTS IS: ", type(outputs))
+print("OUTPUTS SHAPE: ", outputs.shape)
+print("OUTPUTS SHAPE: ", outputs.shape)
+
 # Decode and print the generated predictions
 for i, output in enumerate(outputs):
+    print("THE SHAPE OF OUTPUT IS: ", output.shape)
     generated_sequence = tokenizer.decode(output, skip_special_tokens=True)
     print(f"Generated sequence {i+1}: {generated_sequence}")
 
