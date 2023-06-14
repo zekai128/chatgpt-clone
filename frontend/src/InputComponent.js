@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight }  from '@fortawesome/free-solid-svg-icons';
+import InputTextComponent from './InputTextComponent';
+import OutputTextComponent from './OutputTextComponent';
 import "./App.css"
 
 
-const InputComponent = () => {
+const InputComponent = (props) => {
   const [inputValue, setInputValue] = useState('');
   const textareaRef = useRef(null);
 
@@ -23,8 +25,30 @@ const InputComponent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Submitted value:', inputValue);
+
+    const newInputTextComponent = <InputTextComponent text={inputValue} />;
+    props.setTextList((prevList) => [...prevList, newInputTextComponent]);
+
     setInputValue('');
     textareaRef.current.style.height = 'auto'; 
+
+    fetch('http://127.0.0.1:8000/double/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: inputValue }), // Replace with your request payload
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            // store the inputValue
+            const newOutputTextComponent = <OutputTextComponent message={data}/>
+            props.setTextList((prevList) => [...prevList, newOutputTextComponent]);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
   };
 
   const handleKeyDown = (e) => {

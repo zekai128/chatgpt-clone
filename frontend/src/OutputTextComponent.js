@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-const OutputTextComponent = () => {
+const OutputTextComponent = (props) => {
   const [text, setText] = useState(''); // State to hold the animated text
-  const [originalText, setOriginalText] = useState('Test a message that is long enough to spill over into a new line. The text should wrap around in the center div to the next line and stay within the 50% area allocated in the middle of the wrapper.'); // State to store the original text
+  const [originalText, setOriginalText] = useState(props.message); // State to store the original text
 
   useEffect(() => {
     let timerId;
