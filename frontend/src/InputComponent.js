@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight }  from '@fortawesome/free-solid-svg-icons';
 import InputTextComponent from './InputTextComponent';
 import OutputTextComponent from './OutputTextComponent';
+import LoadingIndicator from './LoadingIndicator'
+
 import "./App.css"
 
 
@@ -29,6 +31,9 @@ const InputComponent = (props) => {
     const newInputTextComponent = <InputTextComponent text={inputValue} />;
     props.setTextList((prevList) => [...prevList, newInputTextComponent]);
 
+    const newLoadingIndicator = <LoadingIndicator />;
+    props.setTextList((prevList) => [...prevList, newLoadingIndicator]);
+
     setInputValue('');
     textareaRef.current.style.height = 'auto'; 
 
@@ -41,6 +46,9 @@ const InputComponent = (props) => {
     })
         .then((response) => response.text())
         .then((data) => {
+            // Remove the LoadingIndicator before adding the response component.
+            props.setTextList((prevList) => prevList.filter(item => item !== newLoadingIndicator));
+
             // store the inputValue
             const newOutputTextComponent = <OutputTextComponent message={data}/>
             props.setTextList((prevList) => [...prevList, newOutputTextComponent]);
