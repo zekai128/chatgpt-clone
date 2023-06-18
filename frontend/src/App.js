@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState } from 'react';
 import InputComponent from './InputComponent';
 import OutputComponent from './OutputComponent';
+import LoadingIndicator from './LoadingIndicator';
 
 function App() {
   const [textList, setTextList] = useState([])
@@ -9,7 +10,7 @@ function App() {
   return (
     <div>
       <OutputComponent textList={textList} />
-      <InputComponent textList={textList} setTextList={setTextList} />
+      <InputComponent setTextList={setTextList} />
     </div>
   );
 }
