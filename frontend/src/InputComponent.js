@@ -44,13 +44,15 @@ const InputComponent = (props) => {
       },
       body: JSON.stringify({ message: inputValue }), // Replace with your request payload
     })
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then((data) => {
+
+            const answer = data.response;
             // Remove the LoadingIndicator before adding the response component.
             props.setTextList((prevList) => prevList.filter(item => item !== newLoadingIndicator));
 
             // store the inputValue
-            const newOutputTextComponent = <OutputTextComponent message={data}/>
+            const newOutputTextComponent = <OutputTextComponent message={answer}/>
             props.setTextList((prevList) => [...prevList, newOutputTextComponent]);
         })
         .catch((error) => {

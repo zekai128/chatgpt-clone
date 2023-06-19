@@ -28,4 +28,11 @@ class DoubleMessageAPIView(APIView):
 
         # Decode and print the generated predictions
         generated_sequence = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+        # Remove the prompt from the response, and truncate everything after the last period.
+        last_period_index = generated_sequence.rfind(".")
+
+        if last_period_index != -1:
+            generated_sequence = generated_sequence[len(context):last_period_index+1]
+
         return Response({'response': generated_sequence})# views.py
