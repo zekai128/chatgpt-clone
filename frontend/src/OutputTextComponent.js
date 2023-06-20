@@ -19,7 +19,7 @@ const OutputTextComponent = (props) => {
 
     // Start the animation after a delay
     timerId = setTimeout(() => {
-      const animationInterval = setInterval(updateText, 20); // Update text every 100 milliseconds
+      const animationInterval = setInterval(updateText, 10); // Update text every 100 milliseconds
 
       // Clear the interval and stop the animation when the text is fully displayed
       if (text.length === originalText.length) {
